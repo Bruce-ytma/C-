@@ -1,3 +1,9 @@
+ ///
+ /// @file    Point.cc
+ /// @author  lemon(haohb13@gmail.com)
+ /// @date    2019-05-14 14:33:14
+ ///
+ 
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -5,41 +11,98 @@ using std::endl;
 class Point
 {
 public:
-    //在未显示定义构造函数时，系统会自动提供一个默认构造函数
-    //如果有显示自定义有参构造函数，此时系统就不会在自动提供默认构造函数
-    //需要显示提供默认构造函数
-    //
-    //构造函数支持函数重载
-    Point();
-    Point(int ix,int iy)//如果写成Point(int ix=0,int iy=0),就不需要Point()
-    {
-        _ix=ix;
-        _iy=iy;
-    }
+	//在类内部实现的函数都是inline函数
+	Point() = default;
 
-    void print()
-    {
-        cout<<"("<<_ix<<","<<_iy<<")"<<endl;
-    }
+	explicit //要求显式调用构造函数, 禁止隐式转换
+	Point(int ix, int iy = 0)
+	: _ix(ix)
+	, _iy(iy)
+	{
+		cout << "Point(int,int)" << endl;
+	}
+
+	//委托构造函数
+#if 0
+	Point(int ix)
+	: Point(ix, 0)
+	{
+		cout << "Point(int)" << endl;
+	}
+#endif
+
+	void print()
+	{  
+		cout << "(" << this->_ix
+			 << "," << this->_iy 
+			 << ")" << endl;
+	}
+
+	~Point()
+	{	
+		cout << "~Point()" << endl;	
+	}
 
 private:
-    int _ix;
-    int _iy;
+	int _ix = 10;
+	int _iy = 10;
+	//....
 };
-
-Point::Point()
+ 
+int test0(void)
 {
-    _ix=0;
-    _iy=0;
+	int a = 3;
+	int b = a;
+	cout << "a = " << a << ", b = " << b << endl;
+	int c = 4;
+	c = a = b;//赋值语句
+
+
+	Point pt(1, 2);
+	cout << "pt = ";
+	pt.print();//pt.print(&pt);
+			   //Point::print(&pt);
+	Point pt2 = pt;//创建对象pt2
+	cout << "pt2 = ";
+	pt2.print();
+	cout << endl;
+
+	Point pt3(11, 12);
+	cout << "pt3 = ";
+	pt3.print();//Point::print(&pt3);
+	cout << ">> 执行pt = pt3之后:" << endl;
+	pt = pt3 = pt2;//赋值语句   左操作数  右操作数
+	//pt.operator=(pt3); //完整形式
+	cout << "pt = ";
+	pt.print();
+
+	Point * pt4 = new Point(21, 22);
+	pt4->print();//Point::print(pt4);
+
+	return 0;
 }
 
-int main()
+void test1()
 {
-    int number;
-    Point pt0;//也有默认构造函数的调用
-    pt0.print();
-    Point pt(1,2);
-    pt.print();
-    return 0;
+	Point pt(1);
+	pt.print();
+
+	Point pt2;
+	pt2.print();
 }
 
+void test2()
+{
+	//Point = int;
+	//Point pt = 5;//存在隐式转换  Point(5) 临时对象
+	//pt.print();
+}
+
+
+int main(void)
+{
+	//test0();
+	//test1();
+	test2();
+	return 0;
+}

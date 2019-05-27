@@ -11,19 +11,38 @@ using std::endl;
 class Point
 {
 public:
-
 	Point(int ix = 0, int iy = 0)
 	: _ix(ix)
 	, _iy(iy)
 	{
-		//_ix = ix;//error赋值语句
-		//_iy = iy;
 		cout << "Point(int,int)" << endl;
 	}
 
+	Point(const Point & rhs)
+	: _ix(rhs._ix)
+	, _iy(rhs._iy)
+	{
+		cout << "Point(const Point &)" << endl;
+		//cout << this->_ix << endl;
+		//cout << this->_iy << endl;
+	}
 
+	//运算符作用于自定义类类型
+#if 1
+	//返回值如果去掉&引用符号，return时会进行复制
+	//void operator=(const Point & rhs)
+	Point & operator=(const Point & rhs)
+	{	//this指针代表的是左操作数
+		this->_ix = rhs._ix;
+		this->_iy = rhs._iy;
+		return *this;
+	}
+#endif
+
+	//隐含的this指针, 在编译时，编译器会自动加上
 	void print()
-	{  
+	{   /*    Point * const this     */
+		//this = 0x1000;//error
 		cout << "(" << this->_ix
 			 << "," << this->_iy 
 			 << ")" << endl;
@@ -35,9 +54,8 @@ public:
 	}
 
 private:
-	//const成员只能放到初始化表达式中进行初始化
-	const int _ix;
-	const int _iy;
+	int _ix;
+	int _iy;
 };
  
 int test0(void)
@@ -62,7 +80,7 @@ int test0(void)
 	cout << "pt3 = ";
 	pt3.print();//Point::print(&pt3);
 	cout << ">> 执行pt = pt3之后:" << endl;
-	//pt = pt3 = pt2;//赋值语句   左操作数  右操作数
+	pt = pt3 = pt2;//赋值语句   左操作数  右操作数
 	//pt.operator=(pt3); //完整形式
 	cout << "pt = ";
 	pt.print();
@@ -73,27 +91,10 @@ int test0(void)
 	return 0;
 }
 
-void test1()
-{
-	Point pt(1);
-	pt.print();
-
-	Point pt2;
-	pt2.print();
-}
-
-void test2()
-{
-	//Point = int;
-	//Point pt = 5;//存在隐式转换  Point(5) 临时对象
-	//pt.print();
-}
 
 
 int main(void)
 {
-	//test0();
-	//test1();
-	test2();
+	test0();
 	return 0;
 }
