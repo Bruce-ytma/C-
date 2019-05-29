@@ -19,7 +19,7 @@ private:
 
     static Type *_pInstance;
 public:
-    template<typename... Args>
+    template<typename... Args>//可变参数
     static Type *getInstance(Args... args)
     {
         if(_pInstance==nullptr)
@@ -86,13 +86,16 @@ int main()
 {
     Computer *p1=CSingleton<Computer>::getInstance("Xiaomi",6666);
     p1->print();
+    //printf("p1=%p\n",p1);
     Computer *p2=CSingleton<Computer>::getInstance("Xiaomi",6666);
     p2->print();
-
+    //printf("p2=%p\n",p2);
     Point *p3=CSingleton<Point>::getInstance(1,2);
     p3->print();
+    //printf("p3=%p\n",p3);
     Point *p4=CSingleton<Point>::getInstance(1,2);
     p4->print();
+    //printf("p4=%p\n",p4);
     return 0;
 }
 
