@@ -12,6 +12,7 @@ using namespace std;
 class String
 {
 public:
+    //有参构造函数
     String(const char *pstr)
     {
         cout<<"String(const char *)"<<endl;
@@ -44,7 +45,7 @@ public:
     //
     //具有移动语义的函数要优先于控制语义的函数
     
-#if 0
+#if 1
     //移动构造函数
     String(String &&rhs)//rhs本身是一个左值
         :_pstr(rhs._pstr)//浅拷贝
@@ -108,6 +109,7 @@ void test0()
     cout<<"test std::move"<<endl;
     //std::move显示将一个左值转换成一个右值，本质上就是一个强制转换
     str2=std::move(str1);//该语句之后，就不在使用str1对象了
+    str1=nullptr;
     cout<<"str2="<<str2<<endl;
 
     //str2=std::move(str2);
@@ -118,11 +120,11 @@ String s1("hello");//全局对象
 
 String getString()
 {
-    //String str("hello");//局部对象
-    //return str;//当返回的对象为局部对象时，如果定义了
+    String str("hello");//局部对象
+    return str;//当返回的对象为局部对象时，如果定义了
                  //移动构造函数，return时调用的是移动构造函数
     
-    return s1;//当返回的对象是全局对象时，return调用的是赋值构造函数
+    //return s1;//当返回的对象是全局对象时，return调用的是赋值构造函数
 }
 
 void test1()
@@ -137,8 +139,8 @@ void test1()
 
 int main()
 {
-    //test0();
-    test1();
+    test0();
+    //test1();
     return 0;
 }
 
