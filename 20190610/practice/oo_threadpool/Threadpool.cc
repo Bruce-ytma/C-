@@ -36,7 +36,7 @@ void Threadpool::stop()
     if(!_isExit)
     {
         //当任务队列中还有任务没有执行完毕时，等待
-        while(!_taskque.empty)
+        while(!_taskque.empty())
         {
             //::usleep(1000);
             ::sleep(2);

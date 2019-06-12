@@ -39,7 +39,7 @@ public:
 
 private:
     size_t _queSize;
-    queue<int> _que;
+    queue<ElemType> _que;
     MutexLock _mutex;
     Condition _notFull;
     Condition _notEmpty;
