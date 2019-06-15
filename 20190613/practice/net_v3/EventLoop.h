@@ -9,6 +9,15 @@
 #ifndef __WD_EVENTLOOP_H__
 #define __WD_EVENTLOOP_H__
 
+#include <sys/epoll.h>
+#include <map>
+#include <memory>
+#include <vector>
+#include <functional>
+using std::vector;
+using std::map;
+using std::shared_ptr;
+
 namespace wd
 {
 class Acceptor;

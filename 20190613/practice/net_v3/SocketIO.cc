@@ -87,7 +87,7 @@ int SocketIO::recvPeek(char *buff,int len)
     int ret;
     do{
         ret=::recv(_fd,buff,len,MSG_PEEK);
-    }while(ret==-1 && errno==FINTR)
+    }while(ret==-1 && errno==EINTR);
     return ret;
 }
 
@@ -98,7 +98,7 @@ int SocketIO::writen(const char *buff,int len)
     while(left>0)
     {
         int ret=::write(_fd,p,left);
-        if(ret==-1 && errno==FINTR)
+        if(ret==-1 && errno==EINTR)
         {
             continue;
         }

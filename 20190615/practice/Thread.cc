@@ -1,14 +1,14 @@
 ///*************************************************************************
-///     @FileName: server.c
+///     @FileName: Thread.cc
 ///     @Author:   ytma
 ///     @Email:    1539447319@qq.com
-///     @Time:     2019-06-13 21:34:46
+///     @Time:     2019-06-15 11:40:36
 ///*************************************************************************
-#include <stdio.h>
+#include <iostream>
+using namespace std;
 
 int main()
 {
-    printf("Hello world\n");
     return 0;
 }
 

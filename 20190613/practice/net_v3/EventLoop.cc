@@ -15,7 +15,7 @@ namespace wd
 {
 EventLoop::EventLoop(Acceptor &acceptor)
     :_efd(createEpollFd())
-    ,_acceptor(axxeptor)
+    ,_acceptor(acceptor)
     ,_eventList(1024)
     ,_isLooping(false)
     {
@@ -127,7 +127,7 @@ bool EventLoop::isConnectionClosed(int fd)
     return (ret==0);
 }
 
-int EventLoop::creareEpollFd()
+int EventLoop::createEpollFd()
 {
     int ret=::epoll_create1(0);
     if(-1==ret)
